@@ -62,6 +62,7 @@
                         <label> Image</label>
                         <input type="file" name="image" class="form-control">
                         <div id="imageError" class="text-danger mt-1"></div>
+                        <img src="" id="uploadedImage" class="d-none" width="50" height="50" alt="Image">
                     </div>
 
                     <button type="submit" id="submitBtn" class="btn btn-primary mt-3 float-end submit-btn">Save</button>
@@ -110,15 +111,72 @@
     @push('js')
     <script>
     $(document).ready(function() {
+
+        // Edit Button Click
+        $(document).on('click', '#editBtn', function(e) {
+            e.preventDefault();
+
+            // Get data attributes from the button
+            let id = $(this).data('id');
+            let name = $(this).data('name');
+            let image = $(this).data('image');
+            let quantity = $(this).data('quantity');
+            let costPrice = $(this).data('cost_price');
+            let retailPrice = $(this).data('retail_price');
+            let categoryId = $(this).data('category'); // Fixed here
+            let formAction = $(this).data('url');
+
+            console.log(id,name,image,quantity,costPrice,retailPrice,categoryId,formAction);
+            // return false;
+            // Set the form action and method
+            $('form').attr('action', formAction);
+            $('form').append('@method("PUT")');
+
+
+
+
+            // Populate input fields
+            $('input[name="id"]').val(id);
+            $('input[name="name"]').val(name);
+            // $('input[name="image"]').val(image);
+            $('input[name="quantity"]').val(quantity);
+            $('input[name="cost_price"]').val(costPrice);
+            $('input[name="retail_price"]').val(retailPrice);
+            $('select[name="product_category_id"]').val(categoryId).trigger('change'); // Fixed here
+
+            console.log($('input[name="quantity"]').val())
+
+            $('#uploadedImage').attr('src',image).removeClass('d-none');
+
+            // Update button and show modal
+            $('#submitBtn').text('Update');
+            $('#cancelBtn').removeClass('d-none');
+        });
+
+
+        // Reset form on new category add
+        $(document).on('click', '#cancelBtn', function() {
+            $('form').attr('action', "{{ route('products.store') }}"); // Reset to store action
+            $('form').find('input[name="_method"]').remove(); // Remove the PUT method
+            $('input[name="name"]').val('');
+            $('input[name="quantity"]').val('');
+            $('input[name="cost_price"]').val('');
+            $('input[name="retail_price"]').val('');
+            $('select[name="product_category_id"]').val('').trigger('change');
+            $('#submitBtn').text('Save'); // Reset button text
+            $(this).addClass('d-none');
+            $('#uploadedImage').attr('src','').addClass('d-none');
+        });
+
         // DataTable Initialization
         const table = $('#productTable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('products.index') }}",
             columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
+                data: 'id',
+                name: 'id'
+            },
                 {
                     data: 'category_name',
                     name: 'category_name'
@@ -152,51 +210,6 @@
             ]
         });
 
-        // Edit Button Click
-        $(document).on('click', '#editBtn', function(e) {
-            e.preventDefault();
-
-            // Get data attributes from the button
-            let id = $(this).data('id');
-            let name = $(this).data('name');
-            let image = $(this).data('image');
-            let quantity = $(this).data('quantity');
-            let costPrice = $(this).data('cost_price');
-            let retailPrice = $(this).data('retail_price');
-            let categoryId = $(this).data('category'); // Fixed here
-            let formAction = $(this).data('url');
-
-            // Set the form action and method
-            $('form').attr('action', formAction);
-            $('form').append('@method("PUT")');
-
-            // Populate input fields
-            $('input[name="id"]').val(id);
-            $('input[name="name"]').val(name);
-            $('input[name="image"]').val(image);
-            $('input[name="quantity"]').val(quantity);
-            $('input[name="cost_price"]').val(costPrice);
-            $('input[name="retail_price"]').val(retailPrice);
-            $('select[name="product_category_id"]').val(categoryId).trigger('change'); // Fixed here
-
-            // Update button and show modal
-            $('#submitBtn').text('Update');
-            $('#cancelBtn').removeClass('d-none');
-        });
-
-
-        // Reset form on new category add
-        $(document).on('click', '#cancelBtn', function() {
-            $('form').attr('action', "{{ route('products.store') }}"); // Reset to store action
-            $('form').find('input[name="_method"]').remove(); // Remove the PUT method
-            $('input[name="name"]').val('');
-            $('input[name="quantity"]').val('');
-            $('input[name="cost_price"]').val('');
-            $('input[name="retail_price"]').val('');
-            $('select[name="product_category_id"]').val('').trigger('change');
-            $('#submitBtn').text('Save'); // Reset button text
-            $(this).addClass('d-none');
-        });
 
     });
     </script>

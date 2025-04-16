@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Protected routes (only accessible when logged in)
-Route::middleware('auth')->group(function () { 
+Route::middleware('auth')->group(function () {
 
 
  // ✅  Categories Routes (Standardized)
@@ -37,10 +37,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('create'); // Create form
         Route::get('/{item}', [ProductController::class, 'show'])->name('show'); // Show a specific item
         Route::get('/{item}/edit', [ProductController::class, 'edit'])->name('edit'); // Edit form
-        Route::put('/{item}', [ProductController::class, 'update'])->name('update'); // Update item
+        Route::put('/{product}', [ProductController::class, 'update'])->name('update'); // Update item
         Route::delete('/{item}', [ProductController::class, 'destroy'])->name('destroy'); // Delete item
         Route::post('/{id}/restore', [ProductController::class, 'restore'])->name('restore'); // Restore soft-deleted item
     });
+//    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 
-   
+
+
 });

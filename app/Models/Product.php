@@ -20,10 +20,9 @@ class Product extends Model
     'retail_price',
     'is_stock'
    ];
-  
-//    Relationship with Category model
 
-   public function category()
+
+    public function category()
    {
     return $this->belongsTo(Category:: class, 'product_category_id', 'id');
    }
