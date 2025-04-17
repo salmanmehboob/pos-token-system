@@ -45,10 +45,8 @@ class ProductController extends Controller
                            data-id="' . $product->id . '"
                            data-name="' . $product->name . '"
                            data-image="' . asset($product->image) . '"
-//                           data-image="' . ($product->image ? asset($product->image) : '') . '"
 
                            data-category="' . $product->product_category_id . '"
-                           data-quantity="' . $product->quantity . '"
                            data-cost_price="' . $product->cost_price . '"
                            data-retail_price="' . $product->retail_price . '"
                            data-is_stock="' . $product->is_stock . '"
@@ -90,7 +88,6 @@ class ProductController extends Controller
                 'product_category_id' => 'required|exists:categories,id',
                 'name' => 'required|string|max:255|unique:products,name',
                 'image' => 'nullable|image|max:2048',
-                'quantity' => 'required|integer',
                 'cost_price' => 'required|numeric',
                 'retail_price' => 'required|numeric',
                 'is_stock' => 'boolean',
@@ -153,53 +150,6 @@ class ProductController extends Controller
     /**
      * Update the specified item in storage.
      */
-//    public function update(Request $request, Product $product)
-//    {
-//        $validatedData = $request->validate([
-//            'product_category_id' => 'required|exists:categories,id',
-//            'name' => 'required|string|max:255|unique:products,name,' . $product->id,
-//            'image' => 'nullable|image|max:2048',
-//            'quantity' => 'required|integer',
-//            'cost_price' => 'required|numeric',
-//            'retail_price' => 'required|numeric',
-//            'is_stock' => 'boolean',
-//        ]);
-//
-//        DB::beginTransaction(); // Start the transaction
-//
-//        try {
-//            // Handle image upload after getting the item ID
-//            if ($request->hasFile('image')) {
-//                // Check if the item already has an image and delete it
-//                if ($product->image && Storage::exists(str_replace('storage/', 'public/', $product->image))) {
-//                    Storage::delete(str_replace('storage/', 'public/', $product->image));
-//                }
-//
-//                // Generate a unique file name using timestamp
-//                $fileName = now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
-//
-//                // Store the file in the public disk under a specific folder
-//                $imagePath = $request->file('image')->storeAs(
-//                    'images/products/' . $product->id,
-//                    $fileName,
-//                    'public'
-//                );
-//
-//                // Update the item with the correct image path
-//                $validatedData['image'] = 'storage/' . $imagePath;
-//            }
-//
-//            // Update the item with the validated data
-//            $product->update($validatedData);
-//
-//            DB::commit(); // Commit the transaction
-//
-//            return response()->json(['success' => 'Item updated successfully.']);
-//        } catch (\Exception $e) {
-//            DB::rollBack(); // Roll back the transaction on error
-//            return response()->json(['error' => 'Failed to update item: ' . $e->getMessage()], 500);
-//        }
-//    }
 
     public function update(Request $request, Product $product)
     {
@@ -207,7 +157,6 @@ class ProductController extends Controller
             'product_category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255|unique:products,name,' . $product->id,
             'image' => 'nullable|image|max:2048',
-            'quantity' => 'required|integer',
             'cost_price' => 'required|numeric',
             'retail_price' => 'required|numeric',
             'is_stock' => 'boolean',

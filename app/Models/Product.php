@@ -15,7 +15,6 @@ class Product extends Model
     'name',
     'category',
     'image',
-    'quantity',
     'cost_price',
     'retail_price',
     'is_stock'
@@ -26,5 +25,11 @@ class Product extends Model
    {
     return $this->belongsTo(Category:: class, 'product_category_id', 'id');
    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'product_id', 'id');
+    }
+
 
 }

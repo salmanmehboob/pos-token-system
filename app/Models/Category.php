@@ -19,5 +19,11 @@ class Category extends Model
         return $this->hasMany(Product::class, 'product_category_id', 'id');
     }
 
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'product_category_id', 'id');
+    }
+
+
 
 }

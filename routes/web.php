@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\InventoryController;
 use App\Models\Product;
 
 Route::get('/', function () {
@@ -41,8 +42,18 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{item}', [ProductController::class, 'destroy'])->name('destroy'); // Delete item
         Route::post('/{id}/restore', [ProductController::class, 'restore'])->name('restore'); // Restore soft-deleted item
     });
-//    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 
+    // ✅ Inventories Routes (Standardized + Restore)
+    Route::prefix('inventories')->name('inventories.')->group(function () {
+        Route::get('/', [InventoryController::class, 'index'])->name('index'); // List all items
+        Route::post('/', [InventoryController::class, 'store'])->name('store'); // Store new item
+        Route::get('/create', [InventoryController::class, 'create'])->name('create'); // Create form
+        Route::get('/{inventories}', [InventoryController::class, 'show'])->name('show'); // Show a specific item
+        Route::get('/{inventories}/edit', [InventoryController::class, 'edit'])->name('edit'); // Edit form
+        Route::put('/{inventories}', [InventoryController::class, 'update'])->name('update'); // Update item
+        Route::delete('/{inventories}', [InventoryController::class, 'destroy'])->name('destroy'); // Delete item
+        Route::post('/{id}/restore', [InventoryController::class, 'restore'])->name('restore'); // Restore soft-deleted item
+    });
 
 
 });

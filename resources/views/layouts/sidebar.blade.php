@@ -49,13 +49,22 @@
 
 
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-            aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
+    <!--Inventory -->
+    <li class="nav-item  {{ Route::is('inventories.index') ? 'active' : ''  }}">
+        <a class="nav-link collapsed {{ Route::is('inventories.index') ? 'active' : ''  }}"
+           href="{{route('inventories.index')}}">
+            <i class="fas fa-clipboard-list fa-2x"></i>
+            <span>Inventory</span>
         </a>
+
+    </li>
+
+
+
+
+
+
+
 
         <!-- Nav Item - Charts -->
     <li class="nav-item">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Inventory;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,7 @@ class HomeController extends Controller
     {
         $categoriesCount = Category::count();
         $productsCount = Product::count();
-        return view('dashboard', compact('categoriesCount', 'productsCount'));
+        $inventoriesCount = Inventory::count();
+        return view('dashboard', compact('categoriesCount', 'productsCount', 'inventoriesCount'));
     }
 }

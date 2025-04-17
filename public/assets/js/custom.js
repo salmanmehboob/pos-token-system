@@ -230,7 +230,16 @@ $(document).ready(function () {
 
                 // Reset the form
                 form[0].reset();
-                submitBtn.prop('disabled', false);
+
+                // Reset all select2 fields within the form
+                form.find('.select2').val(null).trigger('change');
+
+                // Hide cancel button and uploaded image within the same form
+                form.find('#cancelBtn').addClass('d-none');
+                form.find('#uploadedImage').attr('src', '').addClass('d-none');
+
+                // Reset submit button state
+                submitBtn.prop('disabled', false).text('Save');
             },
             error: function (xhr) {
                 submitBtn.prop('disabled', false);
