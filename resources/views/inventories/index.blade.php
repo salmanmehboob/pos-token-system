@@ -22,11 +22,10 @@
 
                         <div class="form-group">
                             <label>Category <span class="text-danger">*</span></label>
-                            <select name="product_category_id" class="single-select-placeholder select2"
-                                    style="width: 100%;">
-                                <option value="" disabled selected>Select a category</option>
+                            <select name="product_category_id" id="product_category_id" class="form-control select2">
+                                <option value="">Select Category</option>
                                 @foreach($productCategories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
 
@@ -36,12 +35,9 @@
 
                         <div class="form-group">
                             <label>Product <span class="text-danger">*</span></label>
-                            <select name="product_id" class="single-select-placeholder select2"
-                                    style="width: 100%;">
-                                <option value="" disabled selected>Select a product</option>
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}">{{$product->name}}</option>
-                                @endforeach
+                            <select name="product_id" id="product_id" class="form-control select2">
+                                <option value=""></option>
+                                {{-- Options will be filled via AJAX --}}
                             </select>
 
                             <div id="product_idError" class="text-danger mt-1"></div>
@@ -151,7 +147,7 @@
                         let productId = $(this).data('product');
                         let formAction = $(this).data('url');
 
-                        console.log(id,name,image,quantity,costPrice,retailPrice,categoryId,formAction);
+                        console.log(id,name,image,quantity,categoryId,formAction);
                         // return false;
                         // Set the form action and method
                         $('form').attr('action', formAction);
@@ -188,6 +184,43 @@
                         $(this).addClass('d-none');
                         // $('#uploadedImage').attr('src','').addClass('d-none');
                     });
+
+                    // Load products when category changes
+                    $(document).ready(function () {
+                        $('.select2').select2();
+
+                        $('#product_category_id').on('change', function () {
+                            let categoryId = $(this).val();
+                            let productDropdown = $('#product_id');
+
+                            productDropdown.empty().append('<option value="">Loading...</option>');
+
+                            if (categoryId) {
+                                $.ajax({
+                                    url: '/products-by-category',
+                                    type: 'GET',
+                                    data: { category_id: categoryId },
+                                    success: function (data) {
+                                        productDropdown.empty().append('<option value="">Select Product</option>');
+
+                                        $.each(data, function (index, product) {
+                                            productDropdown.append(`<option value="${product.id}">${product.name}</option>`);
+                                        });
+
+                                        productDropdown.trigger('change'); // refresh select2
+                                    },
+                                    error: function () {
+                                        productDropdown.empty().append('<option value="">Error loading products</option>');
+                                    }
+                                });
+                            } else {
+                                productDropdown.empty().append('<option value="">Select Product</option>');
+                            }
+                        });
+                    });
+
+
+
 
 
 

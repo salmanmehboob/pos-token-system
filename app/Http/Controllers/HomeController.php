@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -29,6 +30,7 @@ class HomeController extends Controller
         $categoriesCount = Category::count();
         $productsCount = Product::count();
         $inventoriesCount = Inventory::count();
-        return view('dashboard', compact('categoriesCount', 'productsCount', 'inventoriesCount'));
+        $historiesCount = History::count();
+        return view('dashboard', compact('categoriesCount', 'productsCount', 'inventoriesCount', 'historiesCount'));
     }
 }

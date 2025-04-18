@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
@@ -54,6 +55,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{inventories}', [InventoryController::class, 'destroy'])->name('destroy'); // Delete item
         Route::post('/{id}/restore', [InventoryController::class, 'restore'])->name('restore'); // Restore soft-deleted item
     });
+    //        route for selecting products by category
+    Route::get('/products-by-category', [InventoryController::class, 'getProductsByCategory'])->name('products.byCategory');
+
+    Route::get('/histories', [HistoryController::class, 'index'])->name('histories.index');
+
+
+//    route for showing histories table
+//    Route::get('/histories', function () {
+//        return redirect()->route('histories.index');
+//    });
+
 
 
 });

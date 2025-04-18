@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\History;
 use App\Models\Inventory;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class InventoryController extends Controller
                 })
                 ->addColumn('product_name', function ($inventory) {
                     return $inventory->product ? $inventory->product->name : 'N/A';
-//                })
+                })
 //                ->addColumn('image', function ($inventory) {
 //                    if ($inventory->image) {
 //                        $imagePath = asset($inventory->image);
@@ -99,12 +100,38 @@ class InventoryController extends Controller
                 // Start a database transaction
                 DB::beginTransaction();
 
+                // Check if the same product/category exists
+                $existingInventory = Inventory::where('product_category_id', $validatedData['product_category_id'])
+                    ->where('product_id', $validatedData['product_id'])
+                    ->first();
+
+                if ($existingInventory) {
+                    // Update the quantity by adding new quantity to existing
+                    $existingInventory->update([
+                        'quantity' => $existingInventory->quantity + $validatedData['quantity'],
+//                        'is_stock' => $validatedData['is_stock'], // optionally update is_stock
+                    ]);
+
+                    DB::commit();
+                    return response()->json(['success' => 'Inventory updated successfully.', 'data' => $existingInventory], 200);
+                }
 
                 // Create the item without the image first to get the ID
-                $inventory = Inventory::create(array_merge($validatedData, ['image' => null]));
+//                $inventory = Inventory::create(array_merge($validatedData, ['image' => null]));
+
+                                $inventory = Inventory::create(array_merge($validatedData));
+                History::create([
+                    'product_category_id' => $validatedData['product_category_id'],
+                    'product_id' => $validatedData['product_id'],
+                    'quantity' => $validatedData['quantity'],
+//                    'is_stock' => $validatedData['is_stock'],
+                    'date' => now(),
+                ]);
+
+
 
                 // Handle image upload after getting the item ID
-                $imagePath = null;
+//                $imagePath = null;
 //                if ($request->hasFile('image')) {
 //                    // Generate a unique file name using timestamp
 //                    $fileName = now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
@@ -126,6 +153,14 @@ class InventoryController extends Controller
 
 
                 return response()->json(['success' =>  'Item created successfully.', 'data' => $inventory], 201);
+                History::create([
+                    'product_category_id' => $validatedData['product_category_id'],
+                    'product_id' => $validatedData['product_id'],
+                    'quantity' => $validatedData['quantity'],
+                    'is_stock' => $validatedData['is_stock'],
+                    'date' => now(),
+                ]);
+
             } catch (\Exception $e) {
                 // Rollback the transaction on error
                 DB::rollBack();
@@ -228,4 +263,18 @@ class InventoryController extends Controller
             return response()->json(['error' => 'Failed to restore item.'], 500);
         }
     }
+
+    /**
+     * Get products by category.
+     */
+    public function getProductsByCategory(Request $request)
+    {
+        $categoryId = $request->category_id;
+
+        $products = Product::where('product_category_id', $categoryId)->orderBy('name', 'asc')->get();
+
+        return response()->json($products);
+    }
+
+
 }
