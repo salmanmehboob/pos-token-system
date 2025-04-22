@@ -63,12 +63,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/histories', [HistoryController::class, 'index'])->name('histories.index');
 
 
-     Route::get('/pos', [PosController::class, 'index'])->name('pos-index'); 
-     //    route for showing histories table
-    //    Route::get('/histories', function () {
-    //        return redirect()->route('histories.index');
-    //    });
-
-
-
+    Route::prefix('sales')->group(function () {
+        Route::get('/pos', [PosController::class, 'index'])->name('sales.pos');
+    });
+    
 });

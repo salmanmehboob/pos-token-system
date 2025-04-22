@@ -25,13 +25,13 @@
 
 
     <!--categories -->
-    <li class="nav-item  {{ Route::is('pos-index') ? 'active' : ''  }}">
-        <a class="nav-link collapsed {{ Route::is('pos-index') ? 'active' : ''  }}" href="{{route('pos-index')}}">
+    <li class="nav-item {{ Route::is('sales.pos') ? 'active' : '' }}">
+        <a class="nav-link collapsed {{ Route::is('sales.pos') ? 'active' : '' }}" href="{{ route('sales.pos') }}">
             <i class="fas fa-th-large fa-2x"></i>
-            <span>Pos</span>
+            <span>POS</span>
         </a>
-
     </li>
+
 
 
     <!--categories -->
