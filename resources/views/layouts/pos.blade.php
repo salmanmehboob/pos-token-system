@@ -29,6 +29,10 @@
 
 
     <!-- ================== BEGIN core-js ================== -->
+    <!--  this is jquery script   -->
+    <script src="{{ asset('assets/vendor/jquery-3.7.1.min.js')  }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendor/jquery-3.7.1.js')  }}" type="text/javascript"></script>
+
     <script src="{{ asset('pos/assets/js/vendor.min.js')  }}" type="text/javascript"></script>
     <script src="{{ asset('pos/assets/js/app.min.js')  }}" type="text/javascript"></script>
     <!-- ================== END core-js ================== -->
@@ -36,6 +40,8 @@
 
 
     <script src="{{ asset('pos/assets/js/demo/pos-customer-order.demo.js')  }}" type="text/javascript"></script>
+    <!-- <script src="{{ asset('pos/assets/js/js.js')  }}" type="text/javascript"></script>
+    <script src="{{ asset('pos/assets/js/rocket-loader.min.js')  }}" type="text/javascript"></script> -->
 
     <!-- ================== END page-js ================== -->
 
