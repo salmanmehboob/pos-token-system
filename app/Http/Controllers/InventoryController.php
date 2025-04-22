@@ -21,11 +21,8 @@ class InventoryController extends Controller
         $productCategories = Category::orderBy('name', 'asc')->get();
         $products = Product::orderBy('name', 'asc')->get();
 
-        //        $items = Item::with('itemCategory')->first();
-        //
-        //        dd($items);
+      
         if ($request->ajax()) {
-//            $products = Product::with('category');
             $inventories = Inventory::with('category', 'product')->get();
 
 
@@ -36,40 +33,36 @@ class InventoryController extends Controller
                 ->addColumn('product_name', function ($inventory) {
                     return $inventory->product ? $inventory->product->name : 'N/A';
                 })
-//                ->addColumn('image', function ($inventory) {
-//                    if ($inventory->image) {
-//                        $imagePath = asset($inventory->image);
-//                        //                        dd($imagePath );
-//                        return '<img src="' . $imagePath . '" width="50" height="50" alt="Image">';
-//                    }
-//                    return 'No Image';
-//                })
-                ->addColumn('actions', function ($inventory) {
+
+               ->addColumn('actions', function ($inventory) {
                     return '
-                    <div class="d-flex">
-                        <a id="editBtn" data-url="' . route('inventories.update', $inventory->id) . '"
-                           data-id="' . $inventory->id . '"
-//                           data-image="' . asset($inventory->image) . '"
+                        <div class="d-flex">
+                            <a href="javascript:void(0)"
+                            id="editBtn"
+                            class="btn btn-primary shadow btn-sm sharp me-1"
+                            data-url="' . route('inventories.update', $inventory->id) . '"
+                            data-id="' . $inventory->id . '"
+                            data-category="' . $inventory->product_category_id . '"
+                            data-product="' . $inventory->product_id . '"
+                            data-quantity="' . $inventory->quantity . '"
+                            data-is_stock="' . $inventory->is_stock . '"
+                            title="Edit Record">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
 
-                           data-category="' . $inventory->product_category_id . '"
-                           data-product="' . $inventory->product_id . '"
-                           data-quantity="' . $inventory->quantity . '"
-                           data-is_stock="' . $inventory->is_stock . '"
-                           href="javascript:void(0)"
-                           class="btn btn-primary shadow btn-sm sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-
-                        <a href="javascript:void(0)"
-                           data-url="' . route('inventories.destroy', $inventory->id) . '"
-                           data-label="delete"
-                           data-id="' . $inventory->id . '"
-                           data-table="inventoryTable"
-                           class="btn btn-danger shadow btn-sm sharp delete-record"
-                           style="margin-left:0.5rem;"
-                           title="Delete Record"><i class="fa fa-trash"></i></a>
-                    </div>
-                ';
+                            <a href="javascript:void(0)"
+                            class="btn btn-danger shadow btn-sm sharp delete-record"
+                            data-url="' . route('inventories.destroy', $inventory->id) . '"
+                            data-label="delete"
+                            data-id="' . $inventory->id . '"
+                            data-table="inventoryTable"
+                            title="Delete Record">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                    ';
                 })
-                ->rawColumns(['actions']) // Ensure both actions and image are treated as raw HTML
+                 ->rawColumns(['actions']) // Ensure both actions and image are treated as raw HTML
                 ->make(true);
         }
 
@@ -82,7 +75,7 @@ class InventoryController extends Controller
 
 
     /**
-     * Store a newly created item in storage.
+     * Store a newly created inventory in storage.
      */
     public function store(Request $request)
     {
@@ -119,7 +112,7 @@ class InventoryController extends Controller
                 // Create the item without the image first to get the ID
 //                $inventory = Inventory::create(array_merge($validatedData, ['image' => null]));
 
-                                $inventory = Inventory::create(array_merge($validatedData));
+                $inventory = Inventory::create(array_merge($validatedData));
                 History::create([
                     'product_category_id' => $validatedData['product_category_id'],
                     'product_id' => $validatedData['product_id'],
@@ -128,24 +121,6 @@ class InventoryController extends Controller
                     'date' => now(),
                 ]);
 
-
-
-                // Handle image upload after getting the item ID
-//                $imagePath = null;
-//                if ($request->hasFile('image')) {
-//                    // Generate a unique file name using timestamp
-//                    $fileName = now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
-//
-//                    // Store the file in the public disk under a specific folder
-//                    $imagePath = $request->file('image')->storeAs(
-//                        'images/inventories/' . $inventory->id,
-//                        $fileName,
-//                        'public'
-//                    );
-//
-//                    // Update the item with the correct image path
-//                    $inventory->update(['image' => 'storage/' . $imagePath]);
-//                }
 
 
                 // Commit the transaction
@@ -185,10 +160,10 @@ class InventoryController extends Controller
 
 
     /**
-     * Update the specified item in storage.
+     * Update the specified inventory in storage.
      */
 
-    public function update(Request $request, Product $inventory)
+    public function update(Request $request,  $id)
     {
         $validatedData = $request->validate([
             'product_category_id' => 'required|exists:categories,id',
@@ -200,27 +175,10 @@ class InventoryController extends Controller
         DB::beginTransaction();
 
         try {
-            // Handle image upload
-//            if ($request->hasFile('image')) {
-//                // Delete old image if it exists
-//                if ($inventory->image && Storage::exists(str_replace('storage/', 'public/', $inventory->image))) {
-//                    Storage::delete(str_replace('storage/', 'public/', $inventory->image));
-//                }
-//
-//                $fileName = now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
-//
-//                // ✅ Fixed path (matches store method)
-//                $imagePath = $request->file('image')->storeAs(
-//                    'images/inventories/' . $inventory->id,
-//                    $fileName,
-//                    'public'
-//                );
-//
-//                $validatedData['image'] = 'storage/' . $imagePath;
-//            }
-//
-//            // Update the product
-//            $inventory->update($validatedData);
+
+            $inventory = Inventory::find($id);
+           // Update the Inventory
+           $inventory->update($validatedData);
 
             DB::commit();
 

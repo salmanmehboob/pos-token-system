@@ -24,16 +24,15 @@
     <hr class="sidebar-divider">
 
 
-
-    <!--products-->
-    <li class="nav-item  {{ Route::is('products.index') ? 'active' : ''  }}">
-        <a class="nav-link collapsed  {{ Route::is('products.index') ? 'active' : ''  }}"
-            href="{{route('products.index')}}">
-            <i class="fas fa-box fa-2x"></i>
-            <span>Products</span>
+    <!--categories -->
+    <li class="nav-item  {{ Route::is('pos-index') ? 'active' : ''  }}">
+        <a class="nav-link collapsed {{ Route::is('pos-index') ? 'active' : ''  }}" href="{{route('pos-index')}}">
+            <i class="fas fa-th-large fa-2x"></i>
+            <span>Pos</span>
         </a>
 
     </li>
+
 
     <!--categories -->
     <li class="nav-item  {{ Route::is('product.categories.index') ? 'active' : ''  }}">
@@ -49,10 +48,22 @@
 
 
 
+    <!--products-->
+    <li class="nav-item  {{ Route::is('products.index') ? 'active' : ''  }}">
+        <a class="nav-link collapsed  {{ Route::is('products.index') ? 'active' : ''  }}"
+            href="{{route('products.index')}}">
+            <i class="fas fa-box fa-2x"></i>
+            <span>Products</span>
+        </a>
+
+    </li>
+
+
+
     <!--Inventory -->
     <li class="nav-item  {{ Route::is('inventories.index') ? 'active' : ''  }}">
         <a class="nav-link collapsed {{ Route::is('inventories.index') ? 'active' : ''  }}"
-           href="{{route('inventories.index')}}">
+            href="{{route('inventories.index')}}">
             <i class="fas fa-clipboard-list fa-2x"></i>
             <span>Inventory</span>
         </a>
@@ -60,10 +71,10 @@
     </li>
 
 
-    <!--Inventory -->
+    <!--History -->
     <li class="nav-item  {{ Route::is('histories.index') ? 'active' : ''  }}">
         <a class="nav-link collapsed {{ Route::is('histories.index') ? 'active' : ''  }}"
-           href="{{route('histories.index')}}">
+            href="{{route('histories.index')}}">
             <i class="fas fa-history fa-2x"></i>
             <span>History</span>
         </a>

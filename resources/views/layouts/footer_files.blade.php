@@ -1,5 +1,16 @@
  <!-- Vendor scripts -->
 
+ <script src="{{ asset('assets/vendor/jquery-3.7.1.js') }}"></script>
+
+ <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.js') }}"></script>
+
+ <!-- links for export buttons  -->
+ <script src="{{ asset('assets/vendor/datatables/buttons.html5.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/datatables/dataTables.buttons.js') }}"></script>
+ <script src="{{ asset('assets/vendor/datatables/jszip.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/datatables/pdfmake.min.js') }}"></script>
+ <script src="{{ asset('assets/vendor/datatables/vfs_fonts.js') }}"></script>
+
 
 
  <!-- Custom scripts for all pages-->
@@ -39,6 +50,7 @@ window.sessionMessages = {
     info: @json(session('info'))
 };
  </script>
+
 
 
  @stack('js')

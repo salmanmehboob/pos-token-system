@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\PosController;
 use App\Models\Product;
 
 Route::get('/', function () {
@@ -24,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
 
  // ✅  Categories Routes (Standardized)
- Route::prefix('product-categories')->name('product.categories.')->group(function () {
+    Route::prefix('product-categories')->name('product.categories.')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');  // List all categories
         Route::get('/{id}', [CategoryController::class, 'show'])->name('show'); // Show a specific category
         Route::post('/', [CategoryController::class, 'store'])->name('store'); // Store a new category
@@ -37,10 +38,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('index'); // List all items
         Route::post('/', [ProductController::class, 'store'])->name('store'); // Store new item
         Route::get('/create', [ProductController::class, 'create'])->name('create'); // Create form
-        Route::get('/{item}', [ProductController::class, 'show'])->name('show'); // Show a specific item
-        Route::get('/{item}/edit', [ProductController::class, 'edit'])->name('edit'); // Edit form
+        Route::get('/{product}', [ProductController::class, 'show'])->name('show'); // Show a specific item
+        Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('edit'); // Edit form
         Route::put('/{product}', [ProductController::class, 'update'])->name('update'); // Update item
-        Route::delete('/{item}', [ProductController::class, 'destroy'])->name('destroy'); // Delete item
+        Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy'); // Delete item
         Route::post('/{id}/restore', [ProductController::class, 'restore'])->name('restore'); // Restore soft-deleted item
     });
 
@@ -49,22 +50,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [InventoryController::class, 'index'])->name('index'); // List all items
         Route::post('/', [InventoryController::class, 'store'])->name('store'); // Store new item
         Route::get('/create', [InventoryController::class, 'create'])->name('create'); // Create form
-        Route::get('/{inventories}', [InventoryController::class, 'show'])->name('show'); // Show a specific item
-        Route::get('/{inventories}/edit', [InventoryController::class, 'edit'])->name('edit'); // Edit form
-        Route::put('/{inventories}', [InventoryController::class, 'update'])->name('update'); // Update item
-        Route::delete('/{inventories}', [InventoryController::class, 'destroy'])->name('destroy'); // Delete item
+        Route::get('/{inventory}', [InventoryController::class, 'show'])->name('show'); // Show a specific item
+        Route::get('/{inventory}/edit', [InventoryController::class, 'edit'])->name('edit'); // Edit form
+        Route::put('/{inventory}', [InventoryController::class, 'update'])->name('update'); // Update item
+        Route::delete('/{inventory}', [InventoryController::class, 'destroy'])->name('destroy'); // Delete item
         Route::post('/{id}/restore', [InventoryController::class, 'restore'])->name('restore'); // Restore soft-deleted item
     });
+
     //        route for selecting products by category
     Route::get('/products-by-category', [InventoryController::class, 'getProductsByCategory'])->name('products.byCategory');
 
     Route::get('/histories', [HistoryController::class, 'index'])->name('histories.index');
 
 
-//    route for showing histories table
-//    Route::get('/histories', function () {
-//        return redirect()->route('histories.index');
-//    });
+     Route::get('/pos', [PosController::class, 'index'])->name('pos-index'); 
+     //    route for showing histories table
+    //    Route::get('/histories', function () {
+    //        return redirect()->route('histories.index');
+    //    });
 
 
 

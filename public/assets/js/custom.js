@@ -100,22 +100,22 @@ $(document).ready(function () {
 
 
     // Initialize DataTables
-    // if ($.fn.dataTable) {
+    if ($.fn.dataTable) {
 
-    //     $('.datatable').DataTable({
-    //         createdRow: function (row, data, index) {
-    //             $(row).addClass('selected')
-    //         },
-    //         language: {
-    //             paginate: {
-    //                 next: '>',
-    //                 previous: '<'
-    //             }
-    //         }
-    //     });
-    // } else {
-    //     console.error('DataTables is not loaded.');
-    // }
+        $('.datatable').DataTable({
+            createdRow: function (row, data, index) {
+                $(row).addClass('selected')
+            },
+            language: {
+                paginate: {
+                    next: '>',
+                    previous: '<'
+                }
+            }
+        });
+    } else {
+        console.error('DataTables is not loaded.');
+    }
 
 
     if ($.fn.select2) {
@@ -265,4 +265,13 @@ $(document).ready(function () {
 
 
 //==================================AJAX Ended==================================================//
+    // new DataTable('#example', {
+    //     layout: {
+    //         topStart: {
+    //             buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+    //         }
+    //     }
+    // });
+
+
 });

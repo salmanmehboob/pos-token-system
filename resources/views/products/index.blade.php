@@ -28,10 +28,10 @@
                     <div class="form-group">
                         <label>Category <span class="text-danger">*</span></label>
                         <select name="product_category_id" class="single-select-placeholder select2"
-                                style="width: 100%;">
+                            style="width: 100%;">
                             <option value="" disabled selected>Select a category</option>
                             @foreach($productCategories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                         </select>
 
@@ -112,9 +112,9 @@
             serverSide: true,
             ajax: "{{ route('products.index') }}",
             columns: [{
-                data: 'id',
-                name: 'id'
-            },
+                    data: 'id',
+                    name: 'id'
+                },
                 {
                     data: 'category_name',
                     name: 'category_name'
@@ -144,7 +144,7 @@
             ]
         });
 
-//
+        //
 
 
 
@@ -161,7 +161,9 @@
             let categoryId = $(this).data('category'); // Fixed here
             let formAction = $(this).data('url');
 
-            console.log(id,name,image,quantity,costPrice,retailPrice,categoryId,formAction);
+
+            // console.log(id, name, image, quantity, costPrice, retailPrice, categoryId, formAction);
+
             // return false;
             // Set the form action and method
             $('form').attr('action', formAction);
@@ -178,9 +180,9 @@
             $('input[name="retail_price"]').val(retailPrice);
             $('select[name="product_category_id"]').val(categoryId).trigger('change'); // Fixed here
 
-            console.log($('input[name="quantity"]').val())
+            // console.log($('input[name="quantity"]').val())
 
-            $('#uploadedImage').attr('src',image).removeClass('d-none');
+            $('#uploadedImage').attr('src', image).removeClass('d-none');
 
             // Update button and show modal
             $('#submitBtn').text('Update');
@@ -198,7 +200,7 @@
             $('select[name="product_category_id"]').val('').trigger('change');
             $('#submitBtn').text('Save'); // Reset button text
             $(this).addClass('d-none');
-            $('#uploadedImage').attr('src','').addClass('d-none');
+            $('#uploadedImage').attr('src', '').addClass('d-none');
         });
 
 

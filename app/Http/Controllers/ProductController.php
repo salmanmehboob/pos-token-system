@@ -138,13 +138,13 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified item.
      */
-//    public function edit($id)
-//    {
-//        $product = Product::findOrFail($id); // Fetch the item by ID
-//        $categories = Category::all(); // Assuming you have categories to list
-//
-//        return view('products.edit', compact('product', 'categories'));
-//    }
+   public function edit($id)
+   {
+       $product = Product::findOrFail($id); // Fetch the item by ID
+       $categories = Category::all(); // Assuming you have categories to list
+
+       return view('products.edit', compact('product', 'categories'));
+   }
 
 
     /**
