@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('product_category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('quantity');
-            $table->boolean('is_stock')->default(true);
-            $table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }

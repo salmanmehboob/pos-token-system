@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\CartController;
 use App\Models\Product;
 
 Route::get('/', function () {
@@ -66,5 +67,20 @@ Route::middleware('auth')->group(function () {
     Route::prefix('sales')->group(function () {
         Route::get('/pos', [PosController::class, 'index'])->name('sales.pos');
     });
-    
+
+
+
+
+    // Cart Routes
+    Route::prefix('carts')->name('carts.')->group(function () {
+        Route::get('/', [PosController::class, 'getCart'])->name('index'); // AJAX cart load
+        Route::post('/', [PosController::class, 'store'])->name('store');
+        Route::put('/{id}', [PosController::class, 'update'])->name('update');
+        Route::delete('/{id}', [PosController::class, 'destroy'])->name('destroy');
+
+        // Separate route for discount
+        Route::post('/apply-discount', [PosController::class, 'applyDiscount'])->name('apply-discount');
+    });
+
+
 });

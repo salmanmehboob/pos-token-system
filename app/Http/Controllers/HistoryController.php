@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\History;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class HistoryController extends Controller
 {

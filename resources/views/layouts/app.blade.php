@@ -15,20 +15,16 @@
 
         @include('layouts.sidebar')
 
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
 
             <!-- main-content -->
             <div id="content">
 
                 @include('layouts.header')
 
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
 
                     @yield('content')
 
@@ -47,7 +43,6 @@
 
     </div>
     <!-- End of Page Wrapper -->
-
 
     @include('layouts.footer_files')
 

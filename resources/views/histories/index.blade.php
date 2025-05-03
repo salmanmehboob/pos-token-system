@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+<head>
+
+</head>
 <div class="container">
     <h2>{{ $title }}</h2>
 

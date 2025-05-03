@@ -15,7 +15,7 @@ class Inventory extends Model
         'product_id',
         'category',
         'quantity',
-        'is_stock'
+        'is_stock',
     ];
 
 
