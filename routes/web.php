@@ -73,10 +73,14 @@ Route::middleware('auth')->group(function () {
 
     // Cart Routes
     Route::prefix('carts')->name('carts.')->group(function () {
-        Route::get('/', [PosController::class, 'getCart'])->name('index'); // AJAX cart load
+        Route::get('/cart', [PosController::class, 'getCart'])->name('get');
+
+
+//        Route::get('/', [PosController::class, 'getCart'])->name('index'); // AJAX cart load
         Route::post('/', [PosController::class, 'store'])->name('store');
         Route::put('/{id}', [PosController::class, 'update'])->name('update');
         Route::delete('/{id}', [PosController::class, 'destroy'])->name('destroy');
+        Route::get('/cart-meta', [PosController::class, 'cartMeta'])->name('meta');
 
         // Separate route for discount
         Route::post('/apply-discount', [PosController::class, 'applyDiscount'])->name('apply-discount');
