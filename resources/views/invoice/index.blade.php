@@ -145,6 +145,14 @@
 <script>
     window.onload = function () {
         window.print();
+
+        window.onafterprint = function () {
+            const urlPattern = /\/invoice\/\d+\/print$/;
+            if (urlPattern.test(window.location.href)) {
+                window.location.href = "{{ route('sales.pos') }}";
+            }
+        };
+        
     };
 </script>
 
