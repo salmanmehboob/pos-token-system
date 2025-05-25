@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             // Foreign key to employees table (renamed from 'employee' to 'employee_id')
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->foreignId('employee_id')->nullable()->constrained('employees')->onDelete('cascade');
 
             $table->decimal('sub_total', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);

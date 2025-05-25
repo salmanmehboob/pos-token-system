@@ -31,7 +31,7 @@ class OrderController extends Controller
             // Step 2: Create the Order
             $order = Order::create([
                 'user_id' => $userId,
-                'employee_id' => $request->employee_id,
+                'employee_id' => isset($request->employee_id) ? $request->employee_id : NULL,
                 'total' => $cart->total,
                 'sub_total' => $cart->sub_total,
                 'discount' => $cart->discount,
@@ -60,6 +60,7 @@ class OrderController extends Controller
             return redirect()->route('invoice', ['id'=>$order->id])->with('success', 'Order placed successfully!');
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             DB::rollBack();
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }

@@ -22,7 +22,10 @@
             @forelse ($orders as $order)
                 <tr>
                     <td>{{ $order->id }}</td>
-                    <td>{{ $order->employee->first_name }} {{ $order->employee->last_name }}</td>
+                    <td>
+                        {{ $order->employee->first_name ?? 'Counter' }} {{ $order->employee->last_name ?? '' }}
+                    </td>
+
                     <td>{{ number_format($order->sub_total, 2) }}</td>
                     <td>{{ number_format($order->discount, 2) }}</td>
                     <td>{{ number_format($order->total, 2) }}</td>
