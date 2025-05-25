@@ -11,6 +11,12 @@
                 <div class="logo-text fw-bold fs-5">Dashboard</div>
             </a>
         </div>
+        <div class="logo p-3 border-bottom">
+
+            <a href="{{ route('sales.pos') }}" class="d-flex align-items-center text-decoration-none">
+                 <div class="btn btn-success logo-text fw-bold fs-5"><i class="fa fa-refresh fa-lg"></i>Refresh</div>
+            </a>
+        </div>
         <div class="nav-container p-2">
             <ul class="nav nav-tabs flex-column" role="tablist">
                 <li class="nav-item">
@@ -89,6 +95,11 @@
         <!-- Fixed footer -->
         <div class="pos-sidebar-footer bg-white border-top p-3 d-flex justify-content-end align-items-center gap-3"
              style="position: fixed; bottom: 0; left: 220px; right: 0; z-index: 1050; box-shadow: 0 -2px 6px rgba(0,0,0,0.1);">
+
+            <a target="_blank" href="{{route('orders')}}"  class="btn order-now-btn d-flex  "  >
+               All Orders
+            </a>
+
 
             <form id="orderForm" action="{{ route('order.place') }}" method="POST" class="d-flex gap-3 align-items-center">
                 @csrf

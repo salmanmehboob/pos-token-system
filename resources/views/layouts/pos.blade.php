@@ -58,7 +58,7 @@
             background-color: #064408; /* Bootstrap primary */
             color: white;
             border-radius: 12px;
-            padding: 12px 25px;
+            padding: 12px 40px;
             font-weight: 600;
             font-size: 1.2rem;
             min-width: 180px;
