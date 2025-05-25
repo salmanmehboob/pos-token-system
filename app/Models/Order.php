@@ -8,6 +8,7 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
+        'employee_id',
         'sub_total',
         'discount',
         'total',
@@ -22,5 +23,9 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 }

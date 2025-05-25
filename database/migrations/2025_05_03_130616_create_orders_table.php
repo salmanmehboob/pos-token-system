@@ -13,13 +13,22 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+
+            // Foreign key to users table
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // Foreign key to employees table (renamed from 'employee' to 'employee_id')
+            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+
             $table->decimal('sub_total', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
+
             $table->string('status')->default('pending');
+
             $table->timestamps();
         });
+
     }
 
     /**

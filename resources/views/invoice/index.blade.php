@@ -1,152 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print Document</title>
-    <link href="{{ asset('assets/css/sb-admin-2.min.css')  }}" rel="stylesheet">
+    <meta name="viewport" content="width=300, initial-scale=1.0">
+    <title>Print Invoice</title>
     <style>
-    body {
-        width: 300px;
-        font-size: 12px;
-        font-family: monospace;
-        margin: 0 auto;
-        padding: 10px;
-    }
+        body {
+            width: 300px;
+            font-size: 10px;
+            font-family: "Lucida Console", "Courier New", monospace;
+            margin: 0 auto;
+            padding: 5px;
+        }
 
+        .text-center {
+            text-align: center;
+        }
 
+        .text-start {
+            text-align: left;
+        }
 
-    .text-center {
-        text-align: center;
-    }
+        .text-end {
+            text-align: right;
+        }
 
-    .border-top,
-    .border-bottom {
-        border-top: 1px dashed #000;
-        border-bottom: 1px dashed #000;
-        margin: 4px 0;
-    }
+        .fw-bold {
+            font-weight: bold;
+        }
 
-    table {
-        width: 100%;
-    }
+        .border-top,
+        .border-bottom {
+            border-top: 1px dashed #000;
+            border-bottom: 1px dashed #000;
+            margin: 4px 0;
+        }
 
-    td,
-    th {
-        padding: 2px 0;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    .fw-bold {
-        font-weight: bold;
-    }
+        td, th {
+            padding: 2px 0;
+            font-size: 10px;
+        }
 
-    .text-end {
-        text-align: end;
-    }
+        .mt-2 {
+            margin-top: 6px;
+        }
+
+        .mb-2 {
+            margin-bottom: 6px;
+        }
+
+        .footer-note {
+            margin-top: 10px;
+            font-size: 9px;
+            text-align: left;
+        }
+
+        .footer-dev {
+            font-size: 8px;
+            text-align: center;
+        }
     </style>
-
 </head>
-
 <body>
 
+<div class="text-center fw-bold">
+    {{ $setting->comp_name }}
+</div>
+<div class="text-center">
+    {{ $setting->comp_address }}<br>
+    Phone: {{ $setting->comp_phone }}<br>
+    Mobile: {{ $setting->comp_mobile }}
+</div>
 
-    <div class="text-center fw-bold">
-        Appflex Technology
-    </div>
-    <div class="text-center">
-        Al-Sadiq Plaza Old Post Office Road ,<br>
-        near leopards courier, Mingora Swat.<br>
-        PHONE : +92 332 9282424<br>
-    </div>
+<div class="text-center fw-bold mt-2">
+    Retail Invoice
+</div>
 
-    <div class="text-center fw-bold mt-2">
-        Retail Invoice
-    </div>
-
-
-
-
-    <div class="mt-2">
-        Date : {{$order->created_at }}<br>
-        Bill No: <b> {{$order->id }}</b><br>
-    </div>
-
-    <div class="border-top border-bottom mt-2 mb-2">
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 50%;" class="text-start">Item</th>
-                    <th style="width: 50%;" class="text-start">Qty</th>
-                    <th style="width: 50%;" class="text-start">Amt</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($order->items as $item)
+<div class="mt-2">
+    <b>Date:</b> {{ $order->created_at->format('d-m-Y h:i A') }}<br>
+    <b>Bill No:</b> {{ $order->id }}<br>
+    <b>Employee:</b> {{ $order->employee->first_name }} {{ $order->employee->last_name }}<br>
+</div>
 
 
-                <tr>
-                    <td>{{$item->product->name}}</td>
-                    <td>{{$item->quantity}}</td>
-                    <td class="text-end">{{$item->subtotal}}</td>
-                </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-    </div>
-    <div class="fw-bold border-top border-bottom mt-2 mb-2">
-        <table>
+<div class="border-top border-bottom mt-2 mb-2">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-start">Item</th>
+            <th class="text-start">Qty</th>
+            <th class="text-end">Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach ($order->items as $item)
             <tr>
-                <td style="width:80% ;">SUB TOTAL</td>
-                <td style="width: 50%;" class="text-end">{{$order->sub_total}}</td>
+                <td>{{ $item->product->name }}</td>
+                <td>{{ $item->quantity }}</td>
+                <td class="text-end">{{ number_format($item->subtotal, 2) }}</td>
             </tr>
-        </table>
-    </div>
-    <div class="fw-bold border-top border-bottom mt-2 mb-2">
+        @endforeach
+        </tbody>
+    </table>
+</div>
 
-        <table>
-            <tr>
-                <td style="width: 80%;">Discount</td>
-                <td class="text-end" colspan="2">{{$order->discount}}</td>
-            </tr>
+<div class="fw-bold border-top border-bottom mt-2 mb-2">
+    <table>
+        <tr>
+            <td class="text-start">SUB TOTAL</td>
+            <td class="text-end">{{ number_format($order->sub_total, 2) }}</td>
+        </tr>
+        <tr>
+            <td class="text-start">DISCOUNT</td>
+            <td class="text-end">{{ number_format($order->discount, 2) }}</td>
+        </tr>
+        <tr>
+            <td class="text-start">TOTAL</td>
+            <td class="text-end">{{ number_format($order->total, 2) }}</td>
+        </tr>
+    </table>
+</div>
 
-        </table>
-    </div>
-    <div class="fw-bold border-top border-bottom mt-2 mb-2">
+<!-- Footer notes -->
 
-        <table>
-            <tr>
-                <td style="width: 80%;">TOTAL</td>
-                <td class="text-end" colspan="2">{{$order->total}}</td>
-            </tr>
+<small class="footer-dev">
+    Software developed by AppFlex Technology +92332-928-2424
+</small>
 
-        </table>
-    </div>
-
-
-
-
-    <script>
-    window.onload = function() {
+<script>
+    window.onload = function () {
         window.print();
 
-        // This will trigger after user prints or cancels
-        window.onafterprint = function() {
-            // Check if the current URL matches the print invoice route pattern
+        window.onafterprint = function () {
             const urlPattern = /\/invoice\/\d+\/print$/;
-
             if (urlPattern.test(window.location.href)) {
-                // Redirect to POS index route after print dialog is closed
                 window.location.href = "{{ route('sales.pos') }}";
             }
         };
     };
-    </script>
-
-
-
+</script>
 
 </body>
-
 </html>

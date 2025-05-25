@@ -18,7 +18,7 @@ class OrderController extends Controller
     {
         $userId = Auth::id();
 
-        // Step 1: Get the cart for the user
+         // Step 1: Get the cart for the user
         $cart = Cart::with('items')->where('user_id', $userId)->first();
 
         if (!$cart || $cart->items->isEmpty()) {
@@ -31,12 +31,14 @@ class OrderController extends Controller
             // Step 2: Create the Order
             $order = Order::create([
                 'user_id' => $userId,
+                'employee_id' => $request->employee_id,
                 'total' => $cart->total,
                 'sub_total' => $cart->sub_total,
                 'discount' => $cart->discount,
                 'status' => 'Completed',
                 'created_at' => now(),
             ]);
+
 
             // Step 3: Create Order Items
             foreach ($cart->items as $item) {
@@ -56,7 +58,7 @@ class OrderController extends Controller
             DB::commit();
 
             return redirect()->route('invoice', ['id'=>$order->id])->with('success', 'Order placed successfully!');
-            
+
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
@@ -70,6 +72,7 @@ class OrderController extends Controller
     public function orderHistory()
     {
         $orders = Order::with('items.product')->where('user_id', Auth::id())->latest()->get();
+//        dd($orders);
         return view('orders.index', [
             'title' => 'Your Order History',
             'orders' => $orders,
@@ -77,5 +80,5 @@ class OrderController extends Controller
     }
 
 
-    
+
 }

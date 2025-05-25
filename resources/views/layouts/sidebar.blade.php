@@ -32,6 +32,20 @@
         </a>
     </li>
 
+    <li class="nav-item {{ Route::is('employees.index') ? 'active' : '' }}">
+        <a class="nav-link collapsed {{ Route::is('employees.index') ? 'active' : '' }}" href="{{ route('employees.index') }}">
+            <i class="fas fa-user-alt fa-2x"></i>
+            <span>Employees</span>
+        </a>
+    </li>
+    <!--Orders -->
+    <li class="nav-item  {{ Route::is('orders') ? 'active' : ''  }}">
+        <a class="nav-link collapsed {{ Route::is('orders') ? 'active' : ''  }}" href="{{route('orders')}}">
+            <i class="fas fa-box-open fa-2x"></i>
+            <span>Orders</span>
+        </a>
+
+    </li>
 
 
     <!--categories -->
@@ -82,14 +96,7 @@
     </li>
 
 
-    <!--Orders -->
-    <li class="nav-item  {{ Route::is('orders') ? 'active' : ''  }}">
-        <a class="nav-link collapsed {{ Route::is('orders') ? 'active' : ''  }}" href="{{route('orders')}}">
-            <i class="fas fa-box-open fa-2x"></i>
-            <span>Orders</span>
-        </a>
 
-    </li>
 
 </ul>
 <!-- End of Sidebar -->

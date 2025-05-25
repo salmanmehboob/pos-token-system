@@ -16,13 +16,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $title = 'Products';
-        $productCategories = Category::orderBy('name', 'asc')->get();
+        $productCategories = Category::orderBy('id', 'asc')->get();
 
-        //        $items = Item::with('itemCategory')->first();
-        //
-        //        dd($items);
         if ($request->ajax()) {
-//            $products = Product::with('category');
             $products = Product::with('category')->get();
 
 
@@ -70,11 +66,6 @@ class ProductController extends Controller
 
         return view('products.index', compact('title', 'productCategories'));
     }
-
-
-
-
-
 
     /**
      * Store a newly created item in storage.

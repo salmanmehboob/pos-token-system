@@ -12,14 +12,17 @@ return new class extends Migration {
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->decimal('sub_total', 10, 2);
+
+            // Foreign key to users table
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // Foreign key to employees table (renamed from 'employee' to 'employee_id')
+             $table->decimal('sub_total', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+         });
     }
 
     /**

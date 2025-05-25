@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Protected routes (only accessible when logged in)
 Route::middleware('auth')->group(function () {
-    
+
 
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
     Route::post('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
@@ -108,7 +109,17 @@ Route::middleware('auth')->group(function () {
     // route for print invoice
     Route::get('invoice/{id}/print',[InvoiceController::class, 'printInvoice'])->name('invoice');
 
-  
+
+    Route::prefix('employees')->name('employees.')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('index'); // List all employees (DataTable)
+        Route::post('/', [EmployeeController::class, 'store'])->name('store'); // Store new employee
+        Route::get('/create', [EmployeeController::class, 'create'])->name('create'); // Optional: Create form view
+        Route::get('/{employee}', [EmployeeController::class, 'show'])->name('show'); // Optional: Show a single employee
+        Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->name('edit'); // Optional: Edit form view
+        Route::put('/{employee}', [EmployeeController::class, 'update'])->name('update'); // Update employee
+        Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->name('destroy'); // Delete employee
+        Route::post('/{id}/restore', [EmployeeController::class, 'restore'])->name('restore'); // Restore soft-deleted employee
+    });
 
 
 

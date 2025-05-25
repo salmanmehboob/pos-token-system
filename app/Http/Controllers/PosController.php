@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\Employee;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,10 +19,11 @@ class PosController extends Controller
     public function index()
     {
         $title = 'Pos';
-        $productCategories = Category::orderBy('name', 'asc')->get();
-        $products = Product::orderBy('name', 'asc')->get();
+        $productCategories = Category::orderBy('id', 'asc')->get();
+        $products = Product::orderBy('id', 'asc')->get();
+        $employees = Employee::orderBy('first_name', 'asc')->get();
 
-        return view('pos.index', compact('title', 'productCategories', 'products'));
+        return view('pos.index', compact('title', 'productCategories', 'products','employees'));
     }
 
 

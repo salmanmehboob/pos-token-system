@@ -3,95 +3,168 @@
 
 @section('content')
 
-<!-- BEGIN pos-menu -->
-<div class="pos-menu">
-    <div class="logo">
-        <a href="{{ route('home') }}">
-            <div class="logo-img"><i class="fa fa-arrow-left"></i></div>
-            <div class="logo-text">Dashboard</div>
-
-        </a>
-    </div>
-    <div class="nav-container">
-        <div class="h-100" data-scrollbar="true" data-skip-mobile="true">
-            <ul class="nav nav-tabs">
+    <!-- BEGIN pos-menu -->
+    <div class="pos-menu bg-light border-end" style="width: 220px; min-height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto;">
+        <div class="logo p-3 border-bottom">
+            <a href="{{ route('home') }}" class="d-flex align-items-center text-decoration-none">
+                <div class="logo-img me-2"><i class="fa fa-arrow-left fa-lg"></i></div>
+                <div class="logo-text fw-bold fs-5">Dashboard</div>
+            </a>
+        </div>
+        <div class="nav-container p-2">
+            <ul class="nav nav-tabs flex-column" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" href="#" data-filter="all">
-                        <i class="fa fa-fw fa-utensils"></i>All
+                        <i class="fa fa-fw fa-utensils"></i> All
                     </a>
                 </li>
                 @foreach ($productCategories as $category)
-                <li class="nav-item">
-                    <a class="nav-link p-4" href="#" data-filter="cat-{{ $category->id }}">
-                        {{ $category->name }}
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-filter="cat-{{ $category->id }}">
+                            {{ $category->name }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         </div>
     </div>
-</div>
-<!-- END pos-menu -->
+    <!-- END pos-menu -->
 
-<!-- BEGIN pos-content -->
-<div class="pos-content">
-    <div class="pos-content-container h-100">
-        <div class="row gx-4">
-            @foreach($products as $product)
-            @php $imagePath = asset($product->image); @endphp
-            <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 pb-4 product-item"
-                data-type="cat-{{ $product->product_category_id }}"
-                data-category-id="{{ $product->product_category_id }}">
-                <a href="javascript:;" class="pos-product" data-id="{{ $product->id }}">
-                    <div class="img" style="background-image: url('{{ $imagePath }}');"></div>
-                    <div class="info">
-                        <div class="title">{{ $product->name }}</div>
-                        <div class="retail_price">Rs {{ $product->retail_price }}</div>
+
+    <!-- BEGIN pos-content -->
+    <div class="pos-content" style="margin-left: 10%; min-height: 100vh; display: flex; flex-direction: column;">
+        <!-- Products grid -->
+        <div class="pos-content-container flex-grow-1 overflow-auto p-3"
+             style="max-height: calc(100vh - 200px); overflow-y: auto;">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                @foreach($products as $product)
+                    @php $imagePath = asset($product->image); @endphp
+                    <div class="col product-item"
+                         data-type="cat-{{ $product->product_category_id }}"
+                         data-category-id="{{ $product->product_category_id }}">
+                        <a href="javascript:;" class="pos-product d-block card h-100" data-id="{{ $product->id }}" style="cursor: pointer;">
+                            <div class="card-img-top" style="background-image: url('{{ $imagePath }}'); background-size: cover; background-position: center; height: 150px;"></div>
+                            <div class="card-body p-2">
+                                <div class="title fw-semibold text-truncate">{{ $product->name }}</div>
+                                <div class="retail_price text-end text-success">Rs {{ number_format($product->retail_price, 2) }}</div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                @endforeach
             </div>
-            @endforeach
         </div>
 
-        <div class="pos-sidebar" id="pos-sidebar">
-            <div class="h-100 d-flex flex-column p-0">
-                <div class="nav-tabs">
-                    <h3 style="margin-left: 7.5rem; padding-top: 1rem;">Your Cart</h3>
-                </div>
-                <div class="pos-sidebar-body tab-content" data-scrollbar="true" data-height="100%">
-                    <div class="tab-pane fade h-100 show active" id="newOrderTab"></div>
-                </div>
-                <div class="pos-sidebar-footer">
-                    <div class="d-flex align-items-center mb-2">
-                        <div>Subtotal</div>
-                        <div class="flex-1 text-end h6 mb-0 subtotal">Rs. 0</div>
-                    </div>
-                    <div class="d-flex align-items-center mb-2">
-                        <div>Discount</div>
-                        <div class="flex-1 text-end h6 mb-0 discount">Rs. 0</div>
-                    </div>
-                    <div class="d-flex align-items-center mb-2">
-                        <div>Total</div>
-                        <div class="flex-1 text-end h4 mb-0 total">Rs. 0</div>
-                    </div>
-                    <div class="d-flex align-items-center mb-2">
-                        <input type="number" id="discount-input" class="form-control" placeholder="Discount Amount">
-                        <button class="btn btn-sm btn-success apply-discount ms-2">Apply</button>
-                    </div>
+        <!-- Cart and order section -->
+        <div class="pos-sidebar bg-white border-top p-3"
+             style="max-height: calc(100vh - 160px); overflow-y: auto; display: flex; flex-direction: column;">
 
-                    <form id="orderForm" action="{{ route('order.place') }}" method="POST" class="d-flex">
-                        @csrf
-                        <button type="submit"
-                            class="btn btn-theme flex-fill d-flex align-items-center justify-content-center">
-                            <span>
-                                <i class="fa fa-cash-register fa-lg my-10px d-block"></i>
-                                <span class="small fw-semibold">Order Now</span>
-                            </span>
-                        </button>
-                    </form>
+            <h5 class="mb-3">Your Cart</h5>
+            <div class="pos-sidebar-body flex-grow-1 mb-3" id="pos-sidebar"
+                 data-scrollbar="true"
+                 style="max-height: calc(100vh - 300px); overflow-y: auto;">
+                <div class="tab-pane fade h-100 show active" id="newOrderTab"></div>
+            </div>
+
+            <!-- Calculation Section -->
+            <div class="calculation-section">
+                <div class="d-flex flex-column flex-md-row justify-content-between text-center text-md-start mb-3">
+                    <div class="mb-2 mb-md-0">
+                        <strong>Subtotal:</strong> <br> <span class="subtotal">Rs. 0.00</span>
+                    </div>
+                    <div class="mb-2 mb-md-0">
+                        <strong>Discount:</strong> <br><span class="discount">Rs. 0.00</span>
+                    </div>
+                    <div class="mb-2 mb-md-0">
+                        <strong>Total:</strong> <br><span class="total">Rs. 0.00</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="number" id="discount-input" class="form-control" placeholder="Discount Amount" min="0" step="0.01">
+                    <button class="btn btn-success apply-discount" type="button">Apply</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Fixed footer -->
+        <div class="pos-sidebar-footer bg-white border-top p-3 d-flex justify-content-end align-items-center gap-3"
+             style="position: fixed; bottom: 0; left: 220px; right: 0; z-index: 1050; box-shadow: 0 -2px 6px rgba(0,0,0,0.1);">
+
+            <form id="orderForm" action="{{ route('order.place') }}" method="POST" class="d-flex gap-3 align-items-center">
+                @csrf
+                <ul class="nav employee-nav flex-row gap-3">
+                    @foreach ($employees as $employee)
+                        <li class="nav-item">
+                            <a href="#"
+                               class="nav-link employee-box"
+                               data-employee-id="{{ $employee->id }}">
+                                {{ $employee->first_name }} {{ $employee->last_name }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <input type="hidden" name="employee_id" id="employee_id" required>
+
+                <button type="submit" class="btn order-now-btn d-flex align-items-center gap-4" style="min-width: 180px;">
+                     Order Now
+                </button>
+
+            </form>
+
+
         </div>
     </div>
-</div>
+
 @endsection
+@push('js')
+    <script !src="">
+        document.querySelectorAll('.employee-box').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active from all
+                document.querySelectorAll('.employee-box').forEach(el => el.classList.remove('active'));
+
+                // Add active to clicked
+                this.classList.add('active');
+
+                // Set hidden input value
+                document.getElementById('employee_id').value = this.getAttribute('data-employee-id');
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Try to enter fullscreen immediately if browser allows
+            const elem = document.documentElement;
+
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(err => {
+                    // fallback: wait for user interaction
+                    document.addEventListener("click", triggerFullScreenOnce);
+                });
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+
+            function triggerFullScreenOnce() {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+
+                // Remove listener after first trigger
+                document.removeEventListener("click", triggerFullScreenOnce);
+            }
+        });
+    </script>
+
+@endpush

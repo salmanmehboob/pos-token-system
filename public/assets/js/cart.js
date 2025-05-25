@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    toastr.options.timeOut = 1000; // 2 seconds
 
     $.ajaxSetup({
         headers: {'X-CSRF-TOKEN': csrfToken}
@@ -71,7 +72,7 @@ $(document).ready(function () {
             }
         });
 
-        
+
     });
 
     $(document).on('click', '.cart-increase', function (e) {
@@ -124,7 +125,7 @@ $(document).ready(function () {
                 }
             }
         });
-        
+
     }
 
     function deleteCartItem(id) {

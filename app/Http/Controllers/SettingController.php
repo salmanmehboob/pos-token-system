@@ -12,7 +12,7 @@ class SettingController extends Controller
 
 
 
-   
+
    /**
     * Display a listing of the items.
     */
@@ -88,7 +88,7 @@ class SettingController extends Controller
             'comp_phone' => 'required|string',
             'comp_mobile' => 'required|string',
             'comp_email' => 'required|string',
-            'comp_logo' => 'required|image|max:2048',
+            'comp_logo' => 'required',
          ]);
 
          try {
@@ -105,6 +105,7 @@ class SettingController extends Controller
             ];
             // Create the item without the image first to get the ID
             $setting = Setting::create($dbData);
+
 
             // Handle image upload after getting the item ID
             $imagePath = null;
@@ -158,20 +159,20 @@ class SettingController extends Controller
          'comp_phone' => 'required|string',
          'comp_mobile' => 'required|string',
          'comp_email' => 'required|string',
-         'comp_logo' => 'required|image|max:2048',
+         'comp_logo' => 'required',
       ]);
 
       DB::beginTransaction();
 
       try {
-         // Handle image upload
+          // Handle image upload
          if ($request->hasFile('comp_logo')) {
             // Delete old image if it exists
             if ($setting->comp_logo && Storage::exists(str_replace('storage/', 'public/', $setting->comp_logo))) {
                Storage::delete(str_replace('storage/', 'public/', $setting->comp_logo));
             }
 
-            $fileName = now()->timestamp . '.' . $request->file('image')->getClientOriginalExtension();
+            $fileName = now()->timestamp . '.' . $request->file('comp_logo')->getClientOriginalExtension();
 
             // ✅ Fixed path (matches store method)
             $imagePath = $request->file('comp_logo')->storeAs(
@@ -218,5 +219,5 @@ class SettingController extends Controller
    }
 
 
- 
+
 }

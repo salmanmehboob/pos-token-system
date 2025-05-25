@@ -9,7 +9,7 @@ class Cart extends Model
 {
     protected $fillable = [
         'user_id',
-        'sub_total',
+         'sub_total',
         'discount',
         'total'
     ];
