@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\HistoryController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\PosController;
-use App\Http\Controllers\CartController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -23,6 +27,14 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Protected routes (only accessible when logged in)
 Route::middleware('auth')->group(function () {
+    
+
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
+    Route::post('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+
+
+
+
 
 
  // ✅  Categories Routes (Standardized)
@@ -86,5 +98,27 @@ Route::middleware('auth')->group(function () {
         Route::post('/apply-discount', [PosController::class, 'applyDiscount'])->name('apply-discount');
     });
 
+
+    // route for orders
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('order.place');
+    Route::get('/orders', [OrderController::class, 'orderHistory'])->name('orders');
+
+
+
+    // route for print invoice
+    Route::get('invoice/{id}/print',[InvoiceController::class, 'printInvoice'])->name('invoice');
+
+  
+
+
+
+    // ========== routes for settings ============
+
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::post('/', [SettingController::class, 'store'])->name('store');
+        Route::put('/{setting}', [SettingController::class, 'update'])->name('update');
+        Route::delete('/{setting}', [SettingController::class, 'destroy'])->name('destroy');
+    });
 
 });

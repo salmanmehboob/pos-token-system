@@ -133,7 +133,7 @@ class InventoryController extends Controller
                     'product_id' => $validatedData['product_id'],
                     'quantity' => $validatedData['quantity'],
                     'is_stock' => $validatedData['is_stock'],
-                    'date' => now(),
+                    'created_at' => now(),
                 ]);
 
             } catch (\Exception $e) {
@@ -147,16 +147,7 @@ class InventoryController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified item.
-     */
-//    public function edit($id)
-//    {
-//        $product = Product::findOrFail($id); // Fetch the item by ID
-//        $categories = Category::all(); // Assuming you have categories to list
-//
-//        return view('products.edit', compact('product', 'categories'));
-//    }
+
 
 
     /**

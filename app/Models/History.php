@@ -14,7 +14,6 @@ class History extends Model
         'product_id',
         'quantity',
         'is_stock',
-        'date',
     ];
 
 

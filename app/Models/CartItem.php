@@ -10,7 +10,7 @@ class CartItem extends Model
         'cart_id',
         'product_id',
         'product_name',
-         'quantity',
+        'quantity',
         'price'
     ];
 

@@ -4,13 +4,9 @@
 
  <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.js') }}"></script>
 
- <!-- links for export buttons  -->
- <script src="{{ asset('assets/vendor/datatables/buttons.html5.min.js') }}"></script>
- <script src="{{ asset('assets/vendor/datatables/dataTables.buttons.js') }}"></script>
- <script src="{{ asset('assets/vendor/datatables/jszip.min.js') }}"></script>
- <script src="{{ asset('assets/vendor/datatables/pdfmake.min.js') }}"></script>
- <script src="{{ asset('assets/vendor/datatables/vfs_fonts.js') }}"></script>
 
+ <!-- bootsrap file  -->
+ <script src="{{ asset('assets/vendor/bootstrap/bootstrap.min.js') }}"></script>
 
 
  <!-- Custom scripts for all pages-->
@@ -18,6 +14,7 @@
 
  <!-- Required vendors -->
  <script src="{{ asset('assets/vendor/global/global.min.js') }}"></script>
+
 
  <!-- select2 -->
  <script src="{{ asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')  }}"></script>
@@ -28,7 +25,6 @@
  <script src="{{ asset('assets/vendor/toastr/js/toastr.min.js') }}"></script>
 
  <!-- Datatable -->
- <!-- <script src="{{ asset('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script> -->
 
  <script src="{{ asset('assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
  <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>

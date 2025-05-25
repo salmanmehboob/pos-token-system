@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     if (messages.success) {
         toastr.success(messages.success, "Success", {
-            timeOut: 5000,
+            timeOut: 3000,
             closeButton: true,
             debug: false,
             newestOnTop: true,
@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     if (messages.error) {
         toastr.error(messages.error, "Error", {
-            timeOut: 5000,
+            timeOut: 3000,
             closeButton: true,
             debug: false,
             newestOnTop: true,
@@ -58,7 +58,7 @@ $(document).ready(function () {
 
     if (messages.info) {
         toastr.info(messages.info, "Info", {
-            timeOut: 5000,
+            timeOut: 3000,
             closeButton: true,
             debug: false,
             newestOnTop: true,
@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     if (messages.warning) {
         toastr.warning(messages.warning, "Warning", {
-            timeOut: 5000,
+            timeOut: 3000,
             closeButton: true,
             debug: false,
             newestOnTop: true,

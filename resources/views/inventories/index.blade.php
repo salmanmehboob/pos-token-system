@@ -99,6 +99,7 @@
 
     @push('js')
     <script>
+        
     // Make the function global so it can be reused
     function loadProductsByCategory(categoryId, selectedProductId = null) {
         let productDropdown = $('#product_id');

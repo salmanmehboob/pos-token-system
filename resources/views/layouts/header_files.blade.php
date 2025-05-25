@@ -1,10 +1,15 @@
 <!-- vendor styles  -->
-<link href="{{asset('assets/vendor/datatables/buttons.dataTables.css')}}" rel="stylesheet">
 
 
 <!--select2 menu-->
 <link rel="stylesheet" href="{{asset('assets/vendor/select2/css/select2.min.css')}}">
 <link href="{{ asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')  }}" rel="stylesheet">
+
+
+
+<!-- boostrap file  -->
+<link href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+
 
 
 <link rel="stylesheet" href="{{ asset('assets/vendor/swiper/css/swiper-bundle.min.css')  }}">

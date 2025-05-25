@@ -6,15 +6,15 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">AppFlex Technology </div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('home')  }}">
+    <li class="nav-item {{ Route::is('home') ? 'active' : '' }}">
+        <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home')  }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -27,7 +27,7 @@
     <!--categories -->
     <li class="nav-item {{ Route::is('sales.pos') ? 'active' : '' }}">
         <a class="nav-link collapsed {{ Route::is('sales.pos') ? 'active' : '' }}" href="{{ route('sales.pos') }}">
-            <i class="fas fa-th-large fa-2x"></i>
+            <i class="fas fa-cash-register fa-2x"></i>
             <span>POS</span>
         </a>
     </li>
@@ -77,6 +77,16 @@
             href="{{route('histories.index')}}">
             <i class="fas fa-history fa-2x"></i>
             <span>History</span>
+        </a>
+
+    </li>
+
+
+    <!--Orders -->
+    <li class="nav-item  {{ Route::is('orders') ? 'active' : ''  }}">
+        <a class="nav-link collapsed {{ Route::is('orders') ? 'active' : ''  }}" href="{{route('orders')}}">
+            <i class="fas fa-box-open fa-2x"></i>
+            <span>Orders</span>
         </a>
 
     </li>

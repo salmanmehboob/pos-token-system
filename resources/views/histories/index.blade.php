@@ -59,7 +59,7 @@
                 <td>{{ $history->product->name ?? 'N/A' }}</td>
                 <td>{{ $history->quantity }}</td>
                 <td>{{ $history->is_stock ? 'In Stock' : 'Out of Stock' }}</td>
-                <td>{{ $history->date }}</td>
+                <td>{{ $history->created_at }}</td>
             </tr>
             @empty
             <tr>
@@ -70,28 +70,6 @@
     </table>
 </div>
 
-<script>
-$(document).ready(function() {
-    $('#historyTable').DataTable({
-        dom: 'Bfrtip',
-        buttons: [{
-                extend: 'csv',
-                className: 'btn btn-sm btn-outline-primary'
-            },
-            {
-                extend: 'excel',
-                className: 'btn btn-sm btn-outline-success'
-            },
-            {
-                extend: 'pdf',
-                className: 'btn btn-sm btn-outline-danger'
-            },
-            {
-                extend: 'print',
-                className: 'btn btn-sm btn-outline-secondary'
-            }
-        ]
-    });
-});
-</script>
+
+
 @endsection

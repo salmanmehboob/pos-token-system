@@ -41,7 +41,7 @@ class PosController extends Controller
                 'price' => $item->price,
                 'quantity' => $item->quantity,
                 'product' => [
-                    'image' => asset($item->product->image ?? 'images/no-image.png')
+                'image' => asset($item->product->image ?? 'images/no-image.png')
                 ]
             ];
         });
@@ -102,8 +102,9 @@ class PosController extends Controller
                 // Reload cart (after possible creation)
                 $updatedCart = $this->getCurrentCart();
 
-                 return response()->json([
+                return response()->json([
                     'success' => true,
+                    'message' => 'Product added to cart.',
                     'cart' => [
                         'items' => $updatedCart->items,
                         'sub_total' => $updatedCart->sub_total,
@@ -132,7 +133,10 @@ class PosController extends Controller
         $item->update(['quantity' => $request->quantity]);
         $cart->updateTotals();
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart item quantity updated.'
+        ]);
     }
 
 
@@ -148,6 +152,7 @@ class PosController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Item removed from cart.',
                 'meta' => [
                     'sub_total' => 0,
                     'discount' => 0,
@@ -161,6 +166,7 @@ class PosController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Item removed from cart.',
             'meta' => [
                 'sub_total' => $cart->sub_total,
                 'discount' => $cart->discount ?? 0,
@@ -184,6 +190,7 @@ class PosController extends Controller
 
         return response()->json([
             'success' => true,
+            'message' => 'Discount applied successfulluy',
             'cart' => $cart->fresh()
         ]);
     }
