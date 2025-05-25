@@ -96,7 +96,7 @@
 <div class="mt-3">
     <b>Date:</b> {{ $order->created_at->format('d-m-Y h:i A') }}<br>
     <b>Bill No:</b> {{ $order->id }}<br>
-    <b>Employee:</b> {{ $order->employee->first_name }} {{ $order->employee->last_name }}
+    <b>Employee:</b> {{ $order->employee->first_name }}  
 </div>
 
 <div class="border-top border-bottom mt-3 mb-3">
@@ -152,7 +152,7 @@
                 window.location.href = "{{ route('sales.pos') }}";
             }
         };
-        
+
     };
 </script>
 

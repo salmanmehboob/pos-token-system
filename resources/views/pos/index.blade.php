@@ -98,7 +98,7 @@
                             <a href="#"
                                class="nav-link employee-box"
                                data-employee-id="{{ $employee->id }}">
-                                {{ $employee->first_name }} {{ $employee->last_name }}
+                                {{ $employee->first_name }}
                             </a>
                         </li>
                     @endforeach
