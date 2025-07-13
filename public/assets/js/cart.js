@@ -68,7 +68,7 @@ $(document).ready(function () {
         $.post(window.cartRoutes.store, { product_id: $(this).data('id') }, function (res) {
             loadCart();
             if (res.success && res.message) {
-                toastr.success(res.message);
+                // toastr.success(res.message);
             }
         });
 
@@ -121,7 +121,7 @@ $(document).ready(function () {
             success: function (res) {
                 loadCart();
                 if (res.success && res.message) {
-                    toastr.success(res.message);
+                    // toastr.success(res.message);
                 }
             }
         });

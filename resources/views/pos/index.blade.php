@@ -41,7 +41,7 @@
     <div class="pos-content" style="margin-left: 10%; min-height: 100vh; display: flex; flex-direction: column;">
         <!-- Products grid -->
         <div class="pos-content-container flex-grow-1 overflow-auto p-3"
-             style="max-height: calc(100vh - 200px); overflow-y: auto;">
+             style="max-height: calc(115vh - 200px); overflow-y: auto;">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
                 @foreach($products as $product)
                     @php $imagePath = asset($product->image); @endphp
